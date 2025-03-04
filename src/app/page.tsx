@@ -1,7 +1,5 @@
 import containers from "@/json/containers.json"
 
-import Image from 'next/image'
-
 export default function Home() {
 
   return (
