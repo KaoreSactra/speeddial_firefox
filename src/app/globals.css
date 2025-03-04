@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #0f0f0f;
+  --shadow-custom: 0 0 15px rgb(123 146 194 / 0.5);
+}
