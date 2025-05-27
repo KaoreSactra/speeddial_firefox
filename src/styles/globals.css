@@ -4,6 +4,6 @@
 @theme {
   --color-primary: #0f0f0f;
   --color-secondary: #786c9f;
-  --shadow-custom: 0 0 15px rgb( 120, 108, 159/ 0.5);
+  --shadow-custom: 0 0 15px rgb(120 108 159 / 0.5);
   --font-display: 'Montserrat', 'sans-serif';
 }

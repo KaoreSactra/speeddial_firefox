@@ -60,7 +60,7 @@ export default function Home() {
     <main className="flex h-dvh w-dvw flex-col items-center justify-center px-[14dvw]">
       <form
         onSubmit={handleSearch}
-        className="shadow-custom mb-15 flex h-[40px] w-[50dvw] items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
+        className="mb-15 flex h-[40px] w-[50dvw] items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
       >
         <input ref={inputRef} type="text" className="text-secondary w-full opacity-100 focus:outline-none" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar..." />
         <button className="text-secondary cursor-pointer opacity-100" type="submit">
