@@ -1,6 +1,9 @@
 @import "tailwindcss";
+@import "./fonts.css";
 
 @theme {
   --color-primary: #0f0f0f;
+  --color-secondary: #7b92c2;
   --shadow-custom: 0 0 15px rgb(123 146 194 / 0.5);
+  --font-display: "Montserrat", "sans-serif";
 }

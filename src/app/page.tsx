@@ -1,19 +1,88 @@
-import containers from "@/json/containers.json"
+'use client'
+import containers from '@/json/containers.json'
+import { Search } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+
+const ALLOWED_DOMAINS = [
+  'aliexpress.com',
+  'amazon.com.br',
+  'crunchyroll.com',
+  'deepseek.com',
+  'github.com',
+  'google.com',
+  'instagram.com',
+  'netflix.com',
+  'nuuvem.com',
+  'pinterest.com',
+  'primevideo.com',
+  'youtube.com',
+]
+
+function isValidUrl(url: string) {
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' && ALLOWED_DOMAINS.some((domain) => parsed.hostname.endsWith(domain))
+  } catch {
+    return false
+  }
+}
 
 export default function Home() {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault()
+    const value = search.trim()
+    if (!value) return
+
+    let url = value
+
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'https://' + url
+    }
+
+    try {
+      const parsed = new URL(url)
+      if (parsed.hostname.includes('.')) {
+        window.location.href = parsed.href
+        return
+      }
+    } catch {}
+    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(value)}`
+  }
 
   return (
-    <main className="w-dvw h-dvh flex justify-center items-center px-[14dvw] bg-primary">
-      <img src="/img/bg/bg_2.png" className="fixed z-10 w-dvw h-dvh object-cover select-none pointer-events-none" draggable="false"/>
-        <ul className="grid grid-cols-4 gap-10 z-20">
-          {containers.map((item) => (
-            <li key={item.id} className="min-h-[100px] min-w-[150px] rounded-lg hover:scale-106 transition duration-300 ease-in-out shadow-custom">
+    <main className="flex h-dvh w-dvw flex-col items-center justify-center px-[14dvw]">
+      <form
+        onSubmit={handleSearch}
+        className="shadow-custom mb-15 flex h-[40px] w-[50dvw] items-center justify-between space-x-2 rounded-lg bg-white p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
+      >
+        <input ref={inputRef} type="text" className="w-full focus:outline-none" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar..." />
+        <button className="hover:text-secondary cursor-pointer" type="submit">
+          <Search />
+        </button>
+      </form>
+      <ul className="grid grid-cols-4 gap-10">
+        {containers.map((item) => (
+          <li
+            key={item.id}
+            className="shadow-custom bg-secondary flex aspect-[3/2] min-h-[100px] min-w-[150px] items-center justify-center rounded-lg transition duration-300 ease-in-out hover:scale-106"
+          >
+            {isValidUrl(item.url) ? (
               <a href={item.url} draggable="false">
-                <img src={item.img} alt={item.name} className="rounded-lg select-none pointer-events-none" draggable="false"/>
+                <img src={item.img} alt={item.name} className="pointer-events-none rounded-lg select-none" draggable="false" />
               </a>
-            </li>
-          ))}
-        </ul>
+            ) : (
+              <span className="text-2xl text-black select-none">URL Inválida</span>
+            )}
+          </li>
+        ))}
+      </ul>
     </main>
   )
 }
