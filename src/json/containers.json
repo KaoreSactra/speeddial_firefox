@@ -1,15 +1,15 @@
 [
     {
         "id": 1,
-        "name": "AliExpress",
-        "url": "https://pt.aliexpress.com",
-        "img": "/img/containers/AliExpress.png"
-    },
-    {
-        "id": 2,
         "name": "Amazon Shopping",
         "url": "https://www.amazon.com.br",
         "img": "/img/containers/AmazonShopping.png"
+    },
+    {
+        "id": 2,
+        "name": "ChatGPT",
+        "url": "https://chatgpt.com",
+        "img": "/img/containers/ChatGPT.png"
     },
     {
         "id": 3,
@@ -19,21 +19,21 @@
     },
     {
         "id": 4,
-        "name": "DeepSeek",
-        "url": "https://chat.deepseek.com/",
-        "img": "/img/containers/DeepSeek.png"
-    },
-    {
-        "id": 5,
         "name": "GitHub",
         "url": "https://github.com/KaoreSactra",
         "img": "/img/containers/GitHub.png"
     },
     {
-        "id": 6,
+        "id": 5,
         "name": "Gmail",
         "url": "https://mail.google.com/mail/u/0/#inbox",
         "img": "/img/containers/Gmail.png"
+    },
+    {
+        "id": 6,
+        "name": "Google",
+        "url": "https://www.google.com",
+        "img": "/img/containers/Google.png"
     },
     {
         "id": 7,
@@ -43,15 +43,15 @@
     },
     {
         "id": 8,
-        "name": "Netflix",
-        "url": "https://www.netflix.com/browse",
-        "img": "/img/containers/Netflix.png"
+        "name": "Mercado Livre",
+        "url": "https://www.mercadolivre.com.br/",
+        "img": "/img/containers/MercadoLivre.png"
     },
     {
         "id": 9,
-        "name": "Nuuvem",
-        "url": "https://www.nuuvem.com/br-pt",
-        "img": "/img/containers/Nuuvem.png"
+        "name": "Netflix",
+        "url": "https://www.netflix.com/browse",
+        "img": "/img/containers/Netflix.png"
     },
     {
         "id": 10,
@@ -67,7 +67,7 @@
     },
     {
         "id": 12,
-        "name": "Youtube",
+        "name": "YouTube",
         "url": "https://www.youtube.com/",
         "img": "/img/containers/Youtube.png"
     }

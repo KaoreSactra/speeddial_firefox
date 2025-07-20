@@ -4,15 +4,15 @@ import { Search } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 const ALLOWED_DOMAINS = [
-  'aliexpress.com',
   'amazon.com.br',
+  'chatgpt.com',
   'crunchyroll.com',
-  'deepseek.com',
   'github.com',
+  'gmail.com',
   'google.com',
   'instagram.com',
+  'mercadolivre.com.br',
   'netflix.com',
-  'nuuvem.com',
   'pinterest.com',
   'primevideo.com',
   'youtube.com',
