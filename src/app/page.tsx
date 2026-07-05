@@ -60,7 +60,7 @@ export default function Home() {
     <main className="flex h-dvh w-dvw flex-col items-center justify-center px-[14dvw]">
       <form
         onSubmit={handleSearch}
-        className="mb-15 flex h-[40px] w-[50dvw] items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
+        className="mb-15 flex h-10 w-[50dvw] items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
       >
         <input ref={inputRef} type="text" className="text-secondary w-full opacity-100 focus:outline-none" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar..." />
         <button className="text-secondary cursor-pointer opacity-100" type="submit">
@@ -71,7 +71,7 @@ export default function Home() {
         {containers.map((item) => (
           <li
             key={item.id}
-            className="shadow-custom bg-secondary flex aspect-[3/2] min-h-[100px] min-w-[150px] items-center justify-center rounded-lg transition duration-300 ease-in-out hover:scale-106"
+            className="shadow-custom bg-secondary flex aspect-3/2 min-h-[100px] min-w-[150px] items-center justify-center rounded-lg transition duration-300 ease-in-out hover:scale-106"
           >
             {isValidUrl(item.url) ? (
               <a href={item.url} draggable="false">
