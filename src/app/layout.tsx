@@ -1,10 +1,13 @@
-import '@/styles/globals.css'
 import { Bg } from '@/components'
+import '@/styles/globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Aba Inicial',
   description: 'by Gus_Sactra',
+  icons: {
+    icon: '/icon.ico',
+  },
 }
 
 export default function RootLayout({
