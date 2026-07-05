@@ -71,7 +71,7 @@ export default function Home() {
         {containers.map((item) => (
           <li
             key={item.id}
-            className="shadow-custom bg-secondary flex aspect-3/2 min-h-[100px] min-w-[150px] items-center justify-center rounded-lg transition duration-300 ease-in-out hover:scale-106"
+            className="shadow-custom bg-secondary flex aspect-3/2 min-h-25 min-w-37.5 items-center justify-center rounded-lg transition duration-300 ease-in-out hover:scale-106"
           >
             {isValidUrl(item.url) ? (
               <a href={item.url} draggable="false">
