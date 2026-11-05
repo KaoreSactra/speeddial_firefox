@@ -22,7 +22,7 @@ export default function Bg({ className }: LiProps) {
     () => ({
       background: { color: 'transparent' },
       particles: {
-        number: { value: 1300 },
+        number: { value: 600 },
         size: { value: { min: 0.5, max: 2 } },
         move: {
           enable: true,
@@ -45,5 +45,5 @@ export default function Bg({ className }: LiProps) {
     [],
   )
 
-  return <div className={`fixed top-0 left-0 -z-100 h-dvh w-dvw ${className}`}>{init && <Particles id="tsparticles" options={options} className="h-full w-full" />}</div>
+  return <div className={`fixed top-0 left-0 -z-100 h-dvh w-dvw ${className ?? ''}`}>{init && <Particles id="tsparticles" options={options} className="h-full w-full" />}</div>
 }

@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-BR">
       <body className="font-display overflow-hidden bg-primary text-nowrap text-zinc-900 transition-all duration-300 select-none">
         <Bg/>
         {children}
