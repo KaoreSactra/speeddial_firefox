@@ -1,28 +1,20 @@
 'use client'
-import { type CardData, DEFAULT_CARDS, loadCards, saveCards } from '@/lib/cards'
-import { ArrowLeft, ArrowRight, Pencil, Plus, RotateCcw, Settings, Trash2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { type CardData, DEFAULT_CARDS } from '@/lib/cards'
+import { ArrowLeft, ArrowRight, Pencil, Plus, RotateCcw, Trash2 } from 'lucide-react'
+import { useState } from 'react'
 import CardArt from './CardArt'
 import CardEditor from './CardEditor'
 
-export default function CardGrid() {
-  const [cards, setCards] = useState<CardData[]>([])
-  const [loaded, setLoaded] = useState(false)
+interface Props {
+  cards: CardData[]
+  loaded: boolean
+  saveFailed: boolean
+  update: (cards: CardData[]) => void
+}
+
+export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
   const [editMode, setEditMode] = useState(false)
   const [editing, setEditing] = useState<CardData | 'new' | null>(null)
-  const [saveFailed, setSaveFailed] = useState(false)
-
-  // localStorage só existe no cliente: carrega após a hidratação.
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCards(loadCards())
-    setLoaded(true)
-  }, [])
-
-  function update(next: CardData[]) {
-    setCards(next)
-    setSaveFailed(!saveCards(next))
-  }
 
   function move(index: number, delta: number) {
     const target = index + delta
@@ -91,7 +83,7 @@ export default function CardGrid() {
           </button>
         )}
         <button onClick={() => setEditMode((v) => !v)} className={`${actionBtn} ${editMode ? 'bg-secondary!' : 'opacity-40 hover:opacity-100'}`} aria-label="Editar cards" title="Editar cards">
-          <Settings size={16} />
+          <Pencil size={16} />
         </button>
       </div>
 

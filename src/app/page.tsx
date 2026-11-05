@@ -1,46 +1,23 @@
 'use client'
-import { CardGrid } from '@/components'
-import { Search } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { CardGrid, SearchBar, SettingsModal } from '@/components'
+import { useCards, useSearchState } from '@/hooks/useStored'
+import { SlidersHorizontal } from 'lucide-react'
+import { useState } from 'react'
 
 export default function Home() {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [search, setSearch] = useState('')
-
-  useEffect(() => {
-    inputRef.current?.focus()
-  }, [])
-
-  function handleSearch(e: React.FormEvent) {
-    e.preventDefault()
-    const value = search.trim()
-    if (!value) return
-
-    // Parece um endereço (sem espaços e com ponto)? Abre direto; senão pesquisa no Google.
-    if (!/\s/.test(value)) {
-      try {
-        const parsed = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`)
-        if (parsed.hostname.includes('.')) {
-          window.location.href = parsed.href
-          return
-        }
-      } catch {}
-    }
-    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(value)}`
-  }
+  const cardState = useCards()
+  const { settings, setSettings, history, addHistory, removeHistory, clearHistory } = useSearchState()
+  const [showSettings, setShowSettings] = useState(false)
 
   return (
     <main className="flex h-dvh w-dvw flex-col items-center overflow-y-auto px-4 py-6 sm:px-[8dvw] lg:px-[14dvw]">
-      <form
-        onSubmit={handleSearch}
-        className="mt-auto mb-10 flex h-10 w-full shrink-0 lg:mb-15 sm:max-w-[50dvw] xl:max-w-3xl items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
-      >
-        <input ref={inputRef} type="text" className="text-secondary w-full opacity-100 focus:outline-none" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar..." />
-        <button className="text-secondary cursor-pointer opacity-100" type="submit" aria-label="Pesquisar">
-          <Search />
-        </button>
-      </form>
-      <CardGrid />
+      <SearchBar cards={cardState.cards} settings={settings} history={history} onSearched={addHistory} onRemoveHistory={removeHistory} paused={showSettings} />
+      <CardGrid {...cardState} />
+
+      <button onClick={() => setShowSettings(true)} className="fixed bottom-4 left-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/70 text-white opacity-40 hover:opacity-100" aria-label="Configurações" title="Configurações">
+        <SlidersHorizontal size={16} />
+      </button>
+      {showSettings && <SettingsModal settings={settings} onSave={setSettings} onClearHistory={clearHistory} onClose={() => setShowSettings(false)} />}
     </main>
   )
 }
