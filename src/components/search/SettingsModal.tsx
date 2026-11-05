@@ -1,5 +1,5 @@
 'use client'
-import { THEMES, type ThemeChoice } from '@/lib/theme'
+import { getTheme, GROUPS, THEMES, type GroupId, type ThemeMeta } from '@/lib/theme'
 import { DEFAULT_SHORTCUTS, ENGINES, isValidTemplate, type SearchSettings, type Shortcut } from '@/lib/search'
 import { Plus, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
@@ -18,7 +18,11 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
   const [engine, setEngine] = useState(settings.engine)
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(settings.shortcuts)
   const [error, setError] = useState('')
-  const { choice, setChoice } = useTheme()
+  const { choice, theme, setChoice } = useTheme()
+  const currentGroup: GroupId = choice === 'auto' ? 'padrao' : getTheme(choice).group
+  const [group, setGroup] = useState<GroupId>(currentGroup)
+  const inGroup = THEMES.filter((m) => m.group === group)
+  const auto: ThemeMeta | null = group === 'padrao' ? getTheme(theme) : null
 
   function edit(i: number, patch: Partial<Shortcut>) {
     setShortcuts((list) => list.map((s, idx) => (idx === i ? { ...s, ...patch } : s)))
@@ -48,28 +52,46 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
 
         <section className="space-y-2">
           <h3 className="font-semibold">Tema</h3>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {([{ id: 'auto', name: 'Automático' }, ...THEMES] as { id: ThemeChoice; name: string }[]).map((t) => {
-              const meta = THEMES.find((m) => m.id === t.id)
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => setChoice(t.id)}
-                  aria-pressed={choice === t.id}
-                  className={`cursor-pointer overflow-hidden rounded-lg text-left text-sm ring-2 transition ${choice === t.id ? 'ring-secondary' : 'ring-transparent hover:ring-fg/30'}`}
-                >
-                  <span className="relative block h-14 w-full" style={{ background: meta ? meta.preview.page : 'linear-gradient(105deg,#0f0f0f 50%,#f9f9fb 50%)' }}>
-                    {meta && (
-                      <>
-                        <span className="absolute top-3 right-3 left-3 h-3 rounded-full" style={{ background: meta.preview.bar }} />
-                        <span className="absolute right-3 bottom-2 h-2 w-6 rounded-full" style={{ background: meta.preview.accent }} />
-                      </>
-                    )}
-                  </span>
-                  <span className="bg-field block px-2 py-1.5">{t.name}</span>
-                </button>
-              )
-            })}
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Pastas de temas">
+            {GROUPS.map((g) => (
+              <button
+                key={g.id}
+                role="tab"
+                aria-selected={g.id === group}
+                onClick={() => setGroup(g.id)}
+                className={`cursor-pointer rounded-full px-3 py-0.5 text-xs ${g.id === group ? 'bg-fg text-modal' : 'bg-field text-fg/70 hover:text-fg'}`}
+              >
+                {g.name} <span className="opacity-60">{THEMES.filter((m) => m.group === g.id).length}</span>
+              </button>
+            ))}
+          </div>
+          <div className="grid max-h-72 grid-cols-2 gap-2 overflow-y-auto p-1 sm:grid-cols-3">
+            {auto && (
+              <button
+                onClick={() => setChoice('auto')}
+                aria-pressed={choice === 'auto'}
+                className={`cursor-pointer overflow-hidden rounded-lg text-left text-sm ring-2 transition ${choice === 'auto' ? 'ring-secondary' : 'ring-transparent hover:ring-fg/30'}`}
+              >
+                <span className="relative block h-14 w-full" style={{ background: 'linear-gradient(105deg,#1c1b22 50%,#f9f9fb 50%)' }}>
+                  <span className="absolute top-3 right-3 left-3 h-3 rounded-full" style={{ background: 'linear-gradient(105deg,#2b2a33 50%,#ffffff 50%)' }} />
+                </span>
+                <span className="bg-field block px-2 py-1.5">Automático</span>
+              </button>
+            )}
+            {inGroup.map((m) => (
+              <button
+                key={m.id}
+                onClick={() => setChoice(m.id)}
+                aria-pressed={choice === m.id}
+                className={`cursor-pointer overflow-hidden rounded-lg text-left text-sm ring-2 transition ${choice === m.id ? 'ring-secondary' : 'ring-transparent hover:ring-fg/30'}`}
+              >
+                <span className="relative block h-14 w-full" style={{ background: m.preview.page }}>
+                  <span className="absolute top-3 right-3 left-3 h-3 rounded-full" style={{ background: m.preview.bar }} />
+                  <span className="absolute right-3 bottom-2 h-2 w-6 rounded-full" style={{ background: m.preview.accent }} />
+                </span>
+                <span className="bg-field block truncate px-2 py-1.5">{m.name}</span>
+              </button>
+            ))}
           </div>
         </section>
 

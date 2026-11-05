@@ -40,7 +40,12 @@ export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
     <>
       <ul className={`sd-glow my-auto grid w-full max-w-6xl grid-cols-2 gap-4 pb-16 transition-opacity duration-300 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-10 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
         {cards.map((card, i) => (
-          <li key={card.id} className="sd-card group relative aspect-3/2">
+          <li key={card.id} className="sd-card group relative aspect-3/2"
+            onPointerMove={(e) => {
+              const r = e.currentTarget.getBoundingClientRect()
+              e.currentTarget.style.setProperty('--px', `${e.clientX - r.left}px`)
+              e.currentTarget.style.setProperty('--py', `${e.clientY - r.top}px`)
+            }}>
             <a href={card.url} draggable={false} className="block h-full w-full rounded-[inherit]" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
               <CardArt art={card.art} name={card.name} />
             </a>

@@ -1,5 +1,6 @@
 'use client'
 import { DEFAULT_THEME, isThemeChoice, resolveTheme, THEME_KEY, type ThemeChoice, type ThemeId } from '@/lib/theme'
+import { readStored, writeStored } from '@/lib/storage'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 interface ThemeCtx {
@@ -19,10 +20,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
   useEffect(() => {
     const mq = matchMedia('(prefers-color-scheme: light)')
-    let stored: string | null = null
-    try {
-      stored = localStorage.getItem(THEME_KEY)
-    } catch {}
+    const stored = readStored(THEME_KEY)
     /* eslint-disable react-hooks/set-state-in-effect */
     setSystemLight(mq.matches)
     if (isThemeChoice(stored)) setChoiceState(stored)
@@ -41,9 +39,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
   function setChoice(c: ThemeChoice) {
     setChoiceState(c)
-    try {
-      localStorage.setItem(THEME_KEY, c)
-    } catch {}
+    writeStored(THEME_KEY, c)
   }
 
   return <Ctx.Provider value={{ choice, theme, ready, setChoice }}>{children}</Ctx.Provider>

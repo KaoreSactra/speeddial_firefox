@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './fonts.css';
+@import './themes.css';
 
 /* Os componentes usam só estes tokens; cada tema abaixo define os valores. */
 @theme inline {
@@ -15,7 +16,7 @@
 }
 
 /* ---------- Intergaláctico (original) ---------- */
-:root,
+:where(:root),
 [data-theme='intergalactic'] {
   color-scheme: dark;
   --bg: #0f0f0f;
@@ -186,13 +187,15 @@
 
 body {
   background: var(--page-bg) fixed no-repeat;
+  font-family: var(--theme-font, 'Montserrat', sans-serif);
+  text-shadow: var(--text-shadow, none);
   color: var(--fg);
   min-height: 100dvh;
 }
 
 /* Cards, barra de pesquisa e menu seguem as variáveis do tema.
    Variáveis opcionais (--clip-*, --cut*, --*-line, --glow-filter) permitem formas e HUDs sem tocar nos componentes. */
-:root {
+:where(:root) {
   --cut: 0px;
   --cut-s: 0px;
 }
@@ -208,6 +211,8 @@ body {
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
   clip-path: var(--clip-card, none);
+  backdrop-filter: var(--blur, none);
+  font-family: var(--card-font, inherit);
   overflow: hidden;
   transition:
     transform 300ms ease,
@@ -216,6 +221,23 @@ body {
 .sd-card:hover {
   transform: var(--card-hover);
   box-shadow: var(--card-shadow-hover);
+}
+.sd-card:active {
+  transform: var(--card-active, var(--card-hover));
+  box-shadow: var(--card-shadow-active, var(--card-shadow-hover));
+}
+/* Luz que acompanha o mouse (--spot define a cor; --px/--py vêm do CardGrid) */
+.sd-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  background: radial-gradient(170px circle at var(--px, 50%) var(--py, 50%), var(--spot, transparent), transparent 70%);
+}
+.sd-card:hover::before {
+  opacity: 1;
 }
 /* Moldura desenhada por cima (borda reta + diagonais nos cantos cortados) */
 .sd-card::after {
@@ -232,10 +254,11 @@ body {
 .sd-search {
   position: relative;
   background: var(--surface);
-  border: 1px solid var(--search-border);
+  border: var(--search-bw, 1px) solid var(--search-border);
   border-radius: var(--search-radius);
   box-shadow: var(--search-shadow);
   clip-path: var(--clip-search, none);
+  backdrop-filter: var(--blur, none);
   transition:
     box-shadow 300ms ease,
     border-color 300ms ease;
@@ -258,8 +281,9 @@ body {
 }
 
 .sd-menu {
-  background: var(--surface);
-  border: 1px solid var(--search-border);
+  background: var(--menu-bg, var(--surface));
+  backdrop-filter: var(--blur, none);
+  border: var(--search-bw, 1px) solid var(--search-border);
   border-radius: var(--menu-radius);
   box-shadow: var(--menu-shadow);
   clip-path: var(--clip-menu, none);
@@ -268,6 +292,9 @@ body {
 .sd-modal {
   border: var(--modal-border, 0 solid transparent);
   border-radius: var(--modal-radius, 0.75rem);
+  box-shadow: var(--modal-shadow, none);
+  background-color: var(--modal-bg, var(--modal));
+  backdrop-filter: var(--blur, none);
   clip-path: var(--clip-modal, none);
 }
 

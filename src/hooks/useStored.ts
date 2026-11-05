@@ -29,8 +29,10 @@ export function useSearchState() {
   const [history, setHistory] = useState<string[]>([])
 
   useEffect(() => {
+    const loaded = loadSettings()
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSettingsState(loadSettings())
+    setSettingsState(loaded)
+    saveSettings(loaded) // persiste migrações (ex.: atalho "tr") e reforça o cookie
     setHistory(loadHistory())
   }, [])
 

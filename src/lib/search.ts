@@ -1,3 +1,5 @@
+import { readStored, writeStored } from './storage'
+
 export interface Engine {
   id: string
   name: string
@@ -24,7 +26,11 @@ export interface Shortcut {
 export interface SearchSettings {
   engine: string
   shortcuts: Shortcut[]
+  /** versão do esquema: usada para acrescentar atalhos novos a quem já tinha configurações salvas */
+  v?: number
 }
+
+export const SETTINGS_VERSION = 2
 
 export const DEFAULT_SHORTCUTS: Shortcut[] = [
   { prefix: 'yt', name: 'YouTube', url: 'https://www.youtube.com/results?search_query=%s' },
@@ -33,9 +39,12 @@ export const DEFAULT_SHORTCUTS: Shortcut[] = [
   { prefix: 'ml', name: 'Mercado Livre', url: 'https://lista.mercadolivre.com.br/%s' },
   { prefix: 'w', name: 'Wikipédia', url: 'https://pt.wikipedia.org/w/index.php?search=%s' },
   { prefix: 'img', name: 'Google Imagens', url: 'https://www.google.com/search?tbm=isch&q=%s' },
+  { prefix: 'tr', name: 'Tradutor', url: 'https://translate.google.com.br/?sl=pt&tl=en&text=%s' },
 ]
 
-export const DEFAULT_SETTINGS: SearchSettings = { engine: 'google', shortcuts: DEFAULT_SHORTCUTS }
+const TRANSLATE = DEFAULT_SHORTCUTS[DEFAULT_SHORTCUTS.length - 1]
+
+export const DEFAULT_SETTINGS: SearchSettings = { engine: 'google', shortcuts: DEFAULT_SHORTCUTS, v: SETTINGS_VERSION }
 
 const SETTINGS_KEY = 'speeddial:search-settings:v1'
 const HISTORY_KEY = 'speeddial:search-history:v1'
@@ -62,21 +71,21 @@ export function buildSearchUrl(template: string, query: string): string {
 
 export function loadSettings(): SearchSettings {
   try {
-    const parsed = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? 'null') as Partial<SearchSettings> | null
+    const parsed = JSON.parse(readStored(SETTINGS_KEY) ?? 'null') as Partial<SearchSettings> | null
     if (!parsed) return DEFAULT_SETTINGS
-    const shortcuts = Array.isArray(parsed.shortcuts)
+    let shortcuts = Array.isArray(parsed.shortcuts)
       ? parsed.shortcuts.filter((s): s is Shortcut => !!s && typeof s.prefix === 'string' && typeof s.name === 'string' && typeof s.url === 'string' && isValidTemplate(s.url))
       : DEFAULT_SHORTCUTS
-    return { engine: getEngine(String(parsed.engine)).id, shortcuts }
+    // Migração v1 → v2: acrescenta o atalho "tr" (tradutor) uma única vez, se o prefixo estiver livre.
+    if ((parsed.v ?? 1) < 2 && !shortcuts.some((s) => s.prefix.toLowerCase() === TRANSLATE.prefix)) shortcuts = [...shortcuts, TRANSLATE]
+    return { engine: getEngine(String(parsed.engine)).id, shortcuts, v: SETTINGS_VERSION }
   } catch {
     return DEFAULT_SETTINGS
   }
 }
 
 export function saveSettings(settings: SearchSettings) {
-  try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
-  } catch {}
+  writeStored(SETTINGS_KEY, JSON.stringify({ ...settings, v: SETTINGS_VERSION }))
 }
 
 export function loadHistory(): string[] {
