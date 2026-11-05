@@ -1,66 +1,66 @@
 [
     {
         "id": 1,
-        "name": "Amazon Shopping",
-        "url": "https://www.amazon.com.br",
-        "color": "#fb923c",
-        "color2": "#ea580c"
-    },
-    {
-        "id": 2,
-        "name": "ChatGPT",
-        "url": "https://chatgpt.com",
-        "color": "#14b8a6",
-        "color2": "#0f766e"
-    },
-    {
-        "id": 3,
-        "name": "Crunchyroll",
-        "url": "https://www.crunchyroll.com/pt-br",
-        "color": "#f59e0b",
-        "color2": "#d97706"
-    },
-    {
-        "id": 4,
         "name": "GitHub",
         "url": "https://github.com/KaoreSactra",
         "color": "#64748b",
         "color2": "#1e293b"
     },
     {
-        "id": 5,
+        "id": 2,
+        "name": "Gemini",
+        "url": "https://gemini.google.com",
+        "color": "#4285f4",
+        "color2": "#9b72cb"
+    },
+    {
+        "id": 3,
         "name": "Gmail",
         "url": "https://mail.google.com/mail/u/0/#inbox",
         "color": "#fb7185",
         "color2": "#e11d48"
     },
     {
+        "id": 4,
+        "name": "Google Drive",
+        "url": "https://drive.google.com",
+        "color": "#fbbc04",
+        "color2": "#1a73e8"
+    },
+    {
+        "id": 5,
+        "name": "YouTube",
+        "url": "https://www.youtube.com/",
+        "color": "#ef4444",
+        "color2": "#b91c1c"
+    },
+    {
         "id": 6,
-        "name": "Google",
-        "url": "https://www.google.com",
-        "color": "#3b82f6",
-        "color2": "#4f46e5"
-    },
-    {
-        "id": 7,
-        "name": "Instagram",
-        "url": "https://www.instagram.com/",
-        "color": "#d946ef",
-        "color2": "#9333ea"
-    },
-    {
-        "id": 8,
-        "name": "Mercado Livre",
-        "url": "https://www.mercadolivre.com.br/",
-        "color": "#eab308",
-        "color2": "#b45309"
-    },
-    {
-        "id": 9,
         "name": "Netflix",
         "url": "https://www.netflix.com/browse",
         "color": "#dc2626",
         "color2": "#7f1d1d"
+    },
+    {
+        "id": 7,
+        "name": "Prime Video",
+        "url": "https://www.primevideo.com",
+        "color": "#0ea5e9",
+        "color2": "#1d4ed8"
+    },
+    {
+        "id": 8,
+        "name": "Crunchyroll",
+        "url": "https://www.crunchyroll.com/pt-br",
+        "color": "#f59e0b",
+        "color2": "#d97706"
+    },
+    {
+        "id": 9,
+        "name": "Instagram",
+        "url": "https://www.instagram.com/",
+        "color": "#d946ef",
+        "color2": "#9333ea"
     },
     {
         "id": 10,
@@ -71,16 +71,16 @@
     },
     {
         "id": 11,
-        "name": "Prime Video",
-        "url": "https://www.primevideo.com",
-        "color": "#0ea5e9",
-        "color2": "#1d4ed8"
+        "name": "Amazon Shopping",
+        "url": "https://www.amazon.com.br",
+        "color": "#fb923c",
+        "color2": "#ea580c"
     },
     {
         "id": 12,
-        "name": "YouTube",
-        "url": "https://www.youtube.com/",
-        "color": "#ef4444",
-        "color2": "#b91c1c"
+        "name": "Mercado Livre",
+        "url": "https://www.mercadolivre.com.br/",
+        "color": "#eab308",
+        "color2": "#b45309"
     }
 ]
