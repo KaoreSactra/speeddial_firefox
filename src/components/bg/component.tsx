@@ -50,6 +50,8 @@ function particlesFor(fx: FxId): ISourceOptions | null {
       return base({ count: 35, colors: ['#6b8f5a', '#a3b86c', '#c9a66b', '#8aa05a'], size: [3, 6], opacity: [0.35, 0.7], drift: { dir: 'bottom-right', speed: 0.8 }, twinkle: false })
     case 'bubbles':
       return base({ count: 40, colors: ['#aee6ff', '#ffffff'], size: [2, 9], opacity: [0.1, 0.4], drift: { dir: 'top', speed: 0.6 } })
+    case 'zonai':
+      return base({ count: 80, colors: ['#5ff2d6', '#a9fff0', '#e6c66a', '#f6e3a1', '#ffffff'], size: [0.8, 3.4], opacity: [0.1, 0.9], drift: { dir: 'top', speed: 0.35 } })
     case 'embers':
       return base({ count: 70, colors: ['#ff7a18', '#ffb347', '#ff4500'], size: [0.8, 3], opacity: [0.2, 0.9], drift: { dir: 'top', speed: 1 } })
     default:

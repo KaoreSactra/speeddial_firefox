@@ -1,6 +1,6 @@
 import { THEME_KEY } from './theme-key'
 
-export type FxId = 'none' | 'stars' | 'pixelstars' | 'matrix' | 'snow' | 'sakura' | 'leaves' | 'bubbles' | 'embers'
+export type FxId = 'none' | 'stars' | 'pixelstars' | 'matrix' | 'snow' | 'sakura' | 'leaves' | 'bubbles' | 'embers' | 'zonai'
 
 export interface ThemeMeta {
   id: string
@@ -31,6 +31,7 @@ export const THEMES: ThemeMeta[] = [
   // Kaore Theme
   t('intergalactic', 'Intergaláctico', 'kaore', 'stars', '#0f0f0f', '#1d1d32', '#786c9f'),
   t('cyber2077', 'Cyberpunk 2077', 'kaore', 'none', 'linear-gradient(100deg,#5a1486,#0a0414 50%,#8a1048)', '#100820', '#fcee0a'),
+  t('totk', 'Zelda: Tears of the Kingdom', 'kaore', 'zonai', 'linear-gradient(100deg,#0e5a60,#070d12 50%,#6a5418)', '#111c21', '#e6c66a'),
   // Padrão
   t('default-dark', 'Padrão escuro', 'padrao', 'none', 'linear-gradient(100deg,#3a3060,#1c1b22 50%,#4a2c2c)', '#2b2a33', '#7c6ae6'),
   t('default-light', 'Padrão claro', 'padrao', 'none', 'linear-gradient(100deg,#e4dcff,#f9f9fb 50%,#ffe3d6)', '#ffffff', '#5b4fd1'),

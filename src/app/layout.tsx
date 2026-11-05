@@ -3,7 +3,7 @@ import ThemeProvider from '@/components/theme/ThemeProvider'
 import { THEME_INIT_SCRIPT } from '@/lib/theme'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
-import { Caveat, Creepster, Orbitron, Press_Start_2P, Rajdhani, Space_Grotesk, VT323 } from 'next/font/google'
+import { Caveat, Cinzel, Creepster, Orbitron, Press_Start_2P, Rajdhani, Space_Grotesk, VT323 } from 'next/font/google'
 
 // Fontes dos temas: carregam só quando o tema que as usa está ativo (preload desligado).
 const hud = Rajdhani({ subsets: ['latin'], display: 'swap', preload: false, weight: ['500', '600', '700'], variable: '--font-hud' })
@@ -13,7 +13,8 @@ const hand = Caveat({ subsets: ['latin'], display: 'swap', preload: false, weigh
 const grot = Space_Grotesk({ subsets: ['latin'], display: 'swap', preload: false, weight: ['500', '700'], variable: '--font-grot' })
 const orb = Orbitron({ subsets: ['latin'], display: 'swap', preload: false, weight: ['500', '700'], variable: '--font-orb' })
 const creep = Creepster({ subsets: ['latin'], display: 'swap', preload: false, weight: '400', variable: '--font-creep' })
-const fontVars = [hud, vt, pixel, hand, grot, orb, creep].map((f) => f.variable).join(' ')
+const cinzel = Cinzel({ subsets: ['latin'], display: 'swap', preload: false, weight: ['500', '600', '700'], variable: '--font-cinzel' })
+const fontVars = [hud, cinzel, vt, pixel, hand, grot, orb, creep].map((f) => f.variable).join(' ')
 
 export const metadata: Metadata = {
   title: 'Aba Inicial',

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './fonts.css';
 @import './themes.css';
+@import './totk.css';
 
 /* Os componentes usam só estes tokens; cada tema abaixo define os valores. */
 @theme inline {
