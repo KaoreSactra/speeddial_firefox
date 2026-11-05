@@ -1,0 +1,56 @@
+[
+  {
+    "id": "gatos",
+    "name": "Gatos",
+    "images": [
+      {
+        "name": "Amazon Shopping",
+        "src": "/img/containers/gatos/AmazonShopping.png"
+      },
+      {
+        "name": "Chat GPT",
+        "src": "/img/containers/gatos/ChatGPT.png"
+      },
+      {
+        "name": "Crunchyroll",
+        "src": "/img/containers/gatos/Crunchyroll.png"
+      },
+      {
+        "name": "Git Hub",
+        "src": "/img/containers/gatos/GitHub.png"
+      },
+      {
+        "name": "Gmail",
+        "src": "/img/containers/gatos/Gmail.png"
+      },
+      {
+        "name": "Google",
+        "src": "/img/containers/gatos/Google.png"
+      },
+      {
+        "name": "Instagram",
+        "src": "/img/containers/gatos/Instagram.png"
+      },
+      {
+        "name": "Mercado Livre",
+        "src": "/img/containers/gatos/MercadoLivre.png"
+      },
+      {
+        "name": "Netflix",
+        "src": "/img/containers/gatos/Netflix.png"
+      },
+      {
+        "name": "Pinterest",
+        "src": "/img/containers/gatos/Pinterest.png"
+      },
+      {
+        "name": "Prime Video",
+        "src": "/img/containers/gatos/PrimeVideo.png"
+      },
+      {
+        "name": "Youtube",
+        "src": "/img/containers/gatos/Youtube.png"
+      }
+    ]
+  }
+]

@@ -1,5 +1,5 @@
 'use client'
-import { type CardArt as CardArtData, type CardData, fileToCardImage, isSafeImageSrc, newId, normalizeUrl, PRESET_IMAGES } from '@/lib/cards'
+import { type CardArt as CardArtData, type CardData, fileToCardImage, isSafeImageSrc, newId, normalizeUrl, PRESET_FOLDERS } from '@/lib/cards'
 import { X } from 'lucide-react'
 import { useState } from 'react'
 import CardArt from './CardArt'
@@ -20,10 +20,13 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
   const [name, setName] = useState(card?.name ?? '')
   const [url, setUrl] = useState(card?.url ?? '')
   const [mode, setMode] = useState<Mode>(initialMode(card?.art))
-  const [src, setSrc] = useState(card?.art.type === 'image' ? card.art.src : PRESET_IMAGES[0].src)
+  const [src, setSrc] = useState(card?.art.type === 'image' ? card.art.src : (PRESET_FOLDERS[0]?.images[0]?.src ?? ''))
   const [color, setColor] = useState(card?.art.type === 'solid' ? card.art.color : '#786c9f')
   const [color2, setColor2] = useState(card?.art.type === 'solid' ? (card.art.color2 ?? '') : '#1d1d32')
   const [error, setError] = useState('')
+  // Começa na pasta da imagem atual (se for uma existente), senão na primeira.
+  const [folderId, setFolderId] = useState(() => (PRESET_FOLDERS.find((f) => f.images.some((i) => i.src === src)) ?? PRESET_FOLDERS[0])?.id)
+  const folder = PRESET_FOLDERS.find((f) => f.id === folderId) ?? PRESET_FOLDERS[0]
 
   const art: CardArtData = mode === 'color' ? { type: 'solid', color, color2: color2 || undefined } : { type: 'image', src }
 
@@ -80,19 +83,38 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
         </div>
 
         {mode === 'preset' && (
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-            {PRESET_IMAGES.map((p) => (
-              <button
-                key={p.src}
-                type="button"
-                onClick={() => setSrc(p.src)}
-                className={`cursor-pointer overflow-hidden rounded-md ${src === p.src ? 'outline-2 outline-white' : 'opacity-70 hover:opacity-100'}`}
-                title={p.name}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.src} alt={p.name} className="aspect-3/2 w-full object-cover" draggable={false} />
-              </button>
-            ))}
+          <div className="space-y-2">
+            {PRESET_FOLDERS.length > 1 && (
+              <div className="flex flex-wrap gap-2" role="tablist" aria-label="Pastas">
+                {PRESET_FOLDERS.map((f) => (
+                  <button
+                    key={f.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={f.id === folder?.id}
+                    onClick={() => setFolderId(f.id)}
+                    className={`cursor-pointer rounded-full px-3 py-0.5 text-xs ${f.id === folder?.id ? 'bg-white text-black' : 'bg-[#1d1d32] text-white/70 hover:text-white'}`}
+                  >
+                    {f.name} <span className="opacity-60">{f.images.length}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {!folder && <p className="text-sm text-white/60">Nenhuma imagem em public/img/containers/.</p>}
+            <div className="grid max-h-64 grid-cols-3 gap-2 overflow-y-auto sm:grid-cols-4">
+              {folder?.images.map((p) => (
+                <button
+                  key={p.src}
+                  type="button"
+                  onClick={() => setSrc(p.src)}
+                  className={`cursor-pointer overflow-hidden rounded-md ${src === p.src ? 'outline-2 outline-white' : 'opacity-70 hover:opacity-100'}`}
+                  title={p.name}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.src} alt={p.name} className="aspect-3/2 w-full object-cover" draggable={false} loading="lazy" />
+                </button>
+              ))}
+            </div>
           </div>
         )}
         {mode === 'upload' && <input type="file" accept="image/*" onChange={(e) => handleFile(e.target.files?.[0])} className="block w-full text-sm file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-white" />}

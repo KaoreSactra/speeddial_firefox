@@ -3,72 +3,72 @@
         "id": 1,
         "name": "Amazon Shopping",
         "url": "https://www.amazon.com.br",
-        "img": "/img/containers/AmazonShopping.png"
+        "img": "/img/containers/gatos/AmazonShopping.png"
     },
     {
         "id": 2,
         "name": "ChatGPT",
         "url": "https://chatgpt.com",
-        "img": "/img/containers/ChatGPT.png"
+        "img": "/img/containers/gatos/ChatGPT.png"
     },
     {
         "id": 3,
         "name": "Crunchyroll",
         "url": "https://www.crunchyroll.com/pt-br",
-        "img": "/img/containers/Crunchyroll.png"
+        "img": "/img/containers/gatos/Crunchyroll.png"
     },
     {
         "id": 4,
         "name": "GitHub",
         "url": "https://github.com/KaoreSactra",
-        "img": "/img/containers/GitHub.png"
+        "img": "/img/containers/gatos/GitHub.png"
     },
     {
         "id": 5,
         "name": "Gmail",
         "url": "https://mail.google.com/mail/u/0/#inbox",
-        "img": "/img/containers/Gmail.png"
+        "img": "/img/containers/gatos/Gmail.png"
     },
     {
         "id": 6,
         "name": "Google",
         "url": "https://www.google.com",
-        "img": "/img/containers/Google.png"
+        "img": "/img/containers/gatos/Google.png"
     },
     {
         "id": 7,
         "name": "Instagram",
         "url": "https://www.instagram.com/",
-        "img": "/img/containers/Instagram.png"
+        "img": "/img/containers/gatos/Instagram.png"
     },
     {
         "id": 8,
         "name": "Mercado Livre",
         "url": "https://www.mercadolivre.com.br/",
-        "img": "/img/containers/MercadoLivre.png"
+        "img": "/img/containers/gatos/MercadoLivre.png"
     },
     {
         "id": 9,
         "name": "Netflix",
         "url": "https://www.netflix.com/browse",
-        "img": "/img/containers/Netflix.png"
+        "img": "/img/containers/gatos/Netflix.png"
     },
     {
         "id": 10,
         "name": "Pinterest",
         "url": "https://br.pinterest.com/",
-        "img": "/img/containers/Pinterest.png"
+        "img": "/img/containers/gatos/Pinterest.png"
     },
     {
         "id": 11,
         "name": "Prime Video",
         "url": "https://www.primevideo.com",
-        "img": "/img/containers/PrimeVideo.png"
+        "img": "/img/containers/gatos/PrimeVideo.png"
     },
     {
         "id": 12,
         "name": "YouTube",
         "url": "https://www.youtube.com/",
-        "img": "/img/containers/Youtube.png"
+        "img": "/img/containers/gatos/Youtube.png"
     }
 ]

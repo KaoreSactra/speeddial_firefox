@@ -1,4 +1,5 @@
 import defaults from '@/json/containers.json'
+import presets from '@/json/presets.json'
 
 /**
  * Aparência do card. É uma união discriminada para que novos tipos
@@ -18,20 +19,14 @@ export interface CardData {
 
 export const STORAGE_KEY = 'speeddial:cards:v1'
 
-export const PRESET_IMAGES = [
-  'AmazonShopping',
-  'ChatGPT',
-  'Crunchyroll',
-  'GitHub',
-  'Gmail',
-  'Google',
-  'Instagram',
-  'MercadoLivre',
-  'Netflix',
-  'Pinterest',
-  'PrimeVideo',
-  'Youtube',
-].map((file) => ({ name: file, src: `/img/containers/${file}.png` }))
+export interface PresetFolder {
+  id: string
+  name: string
+  images: { name: string; src: string }[]
+}
+
+/** Gerado por scripts/gen-presets.mjs a partir de public/img/containers/<pasta>/ */
+export const PRESET_FOLDERS: PresetFolder[] = presets
 
 export const DEFAULT_CARDS: CardData[] = defaults.map((c) => ({
   id: `default-${c.id}`,
@@ -77,13 +72,21 @@ function isCard(value: unknown): value is CardData {
   return false
 }
 
+/** Cards salvos antes das pastas apontavam para /img/containers/X.png (agora em /gatos/). */
+function migrate(card: CardData): CardData {
+  if (card.art.type === 'image' && /^\/img\/containers\/[^/]+\.png$/.test(card.art.src)) {
+    return { ...card, art: { type: 'image', src: card.art.src.replace('/img/containers/', '/img/containers/gatos/') } }
+  }
+  return card
+}
+
 export function loadCards(): CardData[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return DEFAULT_CARDS
     const parsed: unknown = JSON.parse(raw)
     if (!Array.isArray(parsed)) return DEFAULT_CARDS
-    return parsed.filter(isCard)
+    return parsed.filter(isCard).map(migrate)
   } catch {
     return DEFAULT_CARDS
   }
