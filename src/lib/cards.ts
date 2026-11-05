@@ -10,11 +10,68 @@ export type CardArt =
   | { type: 'image'; src: string } // caminho em /public, URL externa ou data URL
   | { type: 'solid'; color: string; color2?: string } // cor ou gradiente
 
+export const CONTAINER_COLORS = ['blue', 'turquoise', 'green', 'yellow', 'orange', 'red', 'pink', 'purple', 'toolbar'] as const
+export const CONTAINER_ICONS = ['fingerprint', 'briefcase', 'dollar', 'cart', 'circle', 'gift', 'vacation', 'food', 'fruit', 'pet', 'tree', 'chill', 'fence'] as const
+export type ContainerColor = (typeof CONTAINER_COLORS)[number]
+export type ContainerIcon = (typeof CONTAINER_ICONS)[number]
+
+/** Cores aproximadas das usadas pelo Firefox, só para a prévia/indicador. */
+export const CONTAINER_HEX: Record<ContainerColor, string> = {
+  blue: '#37adff',
+  turquoise: '#00c79a',
+  green: '#51cd00',
+  yellow: '#ffcb00',
+  orange: '#ff9f00',
+  red: '#ff613d',
+  pink: '#ff4bda',
+  purple: '#af51f5',
+  toolbar: '#7c7c7d',
+}
+
+/**
+ * Container do Firefox onde o card deve abrir. Uma página web não consegue
+ * escolher o container sozinha, então o link usa o protocolo `ext+container:`
+ * da extensão "Open external links in a container".
+ * Cor e ícone fazem a extensão criar o container caso ele ainda não exista.
+ */
+export interface CardContainer {
+  name: string
+  color?: ContainerColor
+  icon?: ContainerIcon
+  pinned?: boolean
+  reader?: boolean
+  mute?: boolean
+}
+
 export interface CardData {
   id: string
   name: string
   url: string
   art: CardArt
+  container?: CardContainer
+}
+
+/** URL que abre o card: direta ou via `ext+container:` quando há container. */
+export function cardHref(card: CardData): string {
+  const c = card.container
+  if (!c?.name) return card.url
+  const params = new URLSearchParams({ name: c.name })
+  if (c.color) params.set('color', c.color)
+  if (c.icon) params.set('icon', c.icon)
+  if (c.pinned) params.set('pinned', 'true')
+  if (c.reader) params.set('openInReaderMode', 'true')
+  if (c.mute) params.set('mute', 'true')
+  params.set('url', card.url) // codificada, para não quebrar com &, ? ou #
+  return `ext+container:${params.toString()}`
+}
+
+function isContainer(value: unknown): value is CardContainer {
+  if (!value || typeof value !== 'object') return false
+  const c = value as Partial<CardContainer>
+  if (typeof c.name !== 'string' || !c.name.trim()) return false
+  if (c.color !== undefined && !CONTAINER_COLORS.includes(c.color)) return false
+  if (c.icon !== undefined && !CONTAINER_ICONS.includes(c.icon)) return false
+  return true
 }
 
 export const STORAGE_KEY = 'speeddial:cards:v1'
@@ -67,6 +124,7 @@ function isCard(value: unknown): value is CardData {
   const c = value as Partial<CardData>
   if (typeof c.id !== 'string' || typeof c.name !== 'string' || typeof c.url !== 'string' || !c.art) return false
   if (normalizeUrl(c.url) === null) return false
+  if (c.container !== undefined && !isContainer(c.container)) return false
   if (c.art.type === 'image') return typeof c.art.src === 'string' && isSafeImageSrc(c.art.src)
   if (c.art.type === 'solid') return typeof c.art.color === 'string'
   return false

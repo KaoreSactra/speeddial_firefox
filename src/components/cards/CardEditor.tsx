@@ -1,6 +1,20 @@
 'use client'
-import { type CardArt as CardArtData, type CardData, fileToCardImage, isSafeImageSrc, newId, normalizeUrl, PRESET_FOLDERS } from '@/lib/cards'
-import { X } from 'lucide-react'
+import {
+  type CardArt as CardArtData,
+  type CardContainer,
+  type CardData,
+  CONTAINER_COLORS,
+  CONTAINER_HEX,
+  CONTAINER_ICONS,
+  type ContainerColor,
+  type ContainerIcon,
+  fileToCardImage,
+  isSafeImageSrc,
+  newId,
+  normalizeUrl,
+  PRESET_FOLDERS,
+} from '@/lib/cards'
+import { Boxes, X } from 'lucide-react'
 import { useState } from 'react'
 import CardArt from './CardArt'
 
@@ -24,6 +38,13 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
   const [color, setColor] = useState(card?.art.type === 'solid' ? card.art.color : '#786c9f')
   const [color2, setColor2] = useState(card?.art.type === 'solid' ? (card.art.color2 ?? '') : '#1d1d32')
   const [error, setError] = useState('')
+  const [useContainer, setUseContainer] = useState(!!card?.container)
+  const [cName, setCName] = useState(card?.container?.name ?? '')
+  const [cColor, setCColor] = useState<ContainerColor | ''>(card?.container?.color ?? '')
+  const [cIcon, setCIcon] = useState<ContainerIcon | ''>(card?.container?.icon ?? '')
+  const [cPinned, setCPinned] = useState(!!card?.container?.pinned)
+  const [cReader, setCReader] = useState(!!card?.container?.reader)
+  const [cMute, setCMute] = useState(!!card?.container?.mute)
   // Começa na pasta da imagem atual (se for uma existente), senão na primeira.
   const [folderId, setFolderId] = useState(() => (PRESET_FOLDERS.find((f) => f.images.some((i) => i.src === src)) ?? PRESET_FOLDERS[0])?.id)
   const folder = PRESET_FOLDERS.find((f) => f.id === folderId) ?? PRESET_FOLDERS[0]
@@ -46,7 +67,19 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
     if (!normalized) return setError('Link inválido. Exemplo: youtube.com')
     if (!name.trim()) return setError('Dê um nome ao card.')
     if (art.type === 'image' && !isSafeImageSrc(src)) return setError('Imagem inválida.')
-    onSave({ id: card?.id ?? newId(), name: name.trim(), url: normalized, art })
+    let container: CardContainer | undefined
+    if (useContainer) {
+      if (!cName.trim()) return setError('Informe o nome do container.')
+      container = {
+        name: cName.trim(),
+        ...(cColor && { color: cColor }),
+        ...(cIcon && { icon: cIcon }),
+        ...(cPinned && { pinned: true }),
+        ...(cReader && { reader: true }),
+        ...(cMute && { mute: true }),
+      }
+    }
+    onSave({ id: card?.id ?? newId(), name: name.trim(), url: normalized, art, ...(container && { container }) })
   }
 
   const modes: [Mode, string][] = [
@@ -132,6 +165,61 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
             </button>
           </div>
         )}
+
+        <fieldset className="space-y-3 rounded-md bg-field/50 p-3">
+          <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold">
+            <input type="checkbox" checked={useContainer} onChange={(e) => setUseContainer(e.target.checked)} className="h-4 w-4 cursor-pointer accent-(--accent)" />
+            <Boxes size={16} /> Abrir num container do Firefox
+          </label>
+          {useContainer && (
+            <>
+              <input className={inputCls} placeholder="Nome do container (ex.: Trabalho)" value={cName} onChange={(e) => setCName(e.target.value)} maxLength={60} />
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <label className="space-y-1">
+                  <span className="text-fg/70">Cor</span>
+                  <select className={inputCls} value={cColor} onChange={(e) => setCColor(e.target.value as ContainerColor | '')}>
+                    <option value="">— manter —</option>
+                    {CONTAINER_COLORS.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="space-y-1">
+                  <span className="text-fg/70">Ícone</span>
+                  <select className={inputCls} value={cIcon} onChange={(e) => setCIcon(e.target.value as ContainerIcon | '')}>
+                    <option value="">— manter —</option>
+                    {CONTAINER_ICONS.map((i) => (
+                      <option key={i} value={i}>
+                        {i}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                <label className="flex cursor-pointer items-center gap-1.5">
+                  <input type="checkbox" checked={cPinned} onChange={(e) => setCPinned(e.target.checked)} className="cursor-pointer" /> Fixar aba
+                </label>
+                <label className="flex cursor-pointer items-center gap-1.5">
+                  <input type="checkbox" checked={cReader} onChange={(e) => setCReader(e.target.checked)} className="cursor-pointer" /> Modo leitura
+                </label>
+                <label className="flex cursor-pointer items-center gap-1.5">
+                  <input type="checkbox" checked={cMute} onChange={(e) => setCMute(e.target.checked)} className="cursor-pointer" /> Sem som
+                </label>
+              </div>
+              <p className="text-xs leading-snug text-fg/60">
+                Requer a extensão{' '}
+                <a href="https://addons.mozilla.org/firefox/addon/open-url-in-container/" target="_blank" rel="noopener noreferrer" className="underline">
+                  Open external links in a container
+                </a>
+                . Se o container não existir e você escolher cor e ícone, ele é criado.
+                {cColor && <span className="ml-1 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ background: CONTAINER_HEX[cColor] }} />}
+              </p>
+            </>
+          )}
+        </fieldset>
 
         <div className="mx-auto aspect-3/2 w-36 rounded-lg bg-secondary">
           <CardArt art={art} name={name || 'Prévia'} />

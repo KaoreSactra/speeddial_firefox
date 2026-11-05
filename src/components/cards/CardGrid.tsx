@@ -1,5 +1,5 @@
 'use client'
-import { type CardData, DEFAULT_CARDS } from '@/lib/cards'
+import { type CardData, cardHref, CONTAINER_HEX, DEFAULT_CARDS } from '@/lib/cards'
 import { ArrowLeft, ArrowRight, Pencil, Plus, RotateCcw, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import CardArt from './CardArt'
@@ -46,9 +46,17 @@ export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
               e.currentTarget.style.setProperty('--px', `${e.clientX - r.left}px`)
               e.currentTarget.style.setProperty('--py', `${e.clientY - r.top}px`)
             }}>
-            <a href={card.url} draggable={false} className="block h-full w-full rounded-[inherit]" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
+            <a href={cardHref(card)} draggable={false} className="block h-full w-full rounded-[inherit]" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
               <CardArt art={card.art} name={card.name} />
             </a>
+            {card.container && (
+              <span
+                className="pointer-events-none absolute top-2 left-2 h-2.5 w-2.5 rounded-full ring-2 ring-black/40"
+                style={{ background: card.container.color ? CONTAINER_HEX[card.container.color] : 'var(--fg)' }}
+                title={`Container: ${card.container.name}`}
+                aria-hidden
+              />
+            )}
             {editMode && (
               <div className="absolute inset-0 flex flex-wrap content-center items-center justify-center gap-2 rounded-[inherit] bg-black/50">
                 <button className={actionBtn} onClick={() => move(i, -1)} disabled={i === 0} aria-label="Mover para trás">
