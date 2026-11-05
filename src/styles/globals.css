@@ -44,6 +44,39 @@
   --menu-shadow: 0 8px 30px rgb(0 0 0 / 0.5);
 }
 
+/* ---------- Cyberpunk ---------- */
+[data-theme='cyberpunk'] {
+  color-scheme: dark;
+  --bg: #0a0a14;
+  --page-bg:
+    radial-gradient(ellipse 55% 40% at 0% 0%, rgb(255 0 200 / 0.28), transparent),
+    radial-gradient(ellipse 55% 40% at 100% 0%, rgb(0 240 255 / 0.22), transparent),
+    linear-gradient(rgb(0 240 255 / 0.05) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgb(0 240 255 / 0.05) 1px, transparent 1px) 0 0 / 40px 40px, #0a0a14;
+  --surface: #12121f;
+  --field: #1a1a2e;
+  --modal: #0f0f1c;
+  --fg: #e6f7ff;
+  --muted: #7f8cc4;
+  --accent: #00f0ff;
+  --on-accent: #05050a;
+
+  --card-bg: #12121f;
+  --card-radius: 2px;
+  --card-border: 1px solid rgb(0 240 255 / 0.6);
+  --card-shadow: 0 0 10px rgb(0 240 255 / 0.35), inset 0 0 14px rgb(255 0 200 / 0.14);
+  --card-shadow-hover: 0 0 6px rgb(0 240 255 / 0.9), 0 0 24px rgb(255 0 200 / 0.65), inset 0 0 14px rgb(255 0 200 / 0.2);
+  --card-hover: translateY(-3px);
+
+  --search-radius: 2px;
+  --search-border: rgb(0 240 255 / 0.6);
+  --search-shadow: 0 0 8px rgb(0 240 255 / 0.25);
+  --search-shadow-hover: 0 0 12px rgb(0 240 255 / 0.5);
+  --search-shadow-focus: 0 0 0 1px #ff00c8, 0 0 22px rgb(255 0 200 / 0.6);
+  --menu-radius: 2px;
+  --menu-shadow: 0 0 18px rgb(0 240 255 / 0.3), 0 8px 30px rgb(0 0 0 / 0.6);
+}
+
 /* ---------- Padrão escuro (Firefox) ---------- */
 [data-theme='default-dark'] {
   color-scheme: dark;
