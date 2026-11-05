@@ -38,7 +38,7 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onClose}>
-      <div onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-2xl space-y-5 overflow-y-auto rounded-xl bg-modal p-5 whitespace-normal text-fg select-text">
+      <div onClick={(e) => e.stopPropagation()} className="sd-modal max-h-full w-full max-w-2xl space-y-5 overflow-y-auto rounded-xl bg-modal p-5 whitespace-normal text-fg select-text">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold">Configurações</h2>
           <button onClick={onClose} aria-label="Fechar" className="cursor-pointer opacity-70 hover:opacity-100">

@@ -58,7 +58,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onCancel}>
-      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-lg space-y-4 overflow-y-auto whitespace-normal rounded-xl bg-modal p-5 text-fg select-text">
+      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="sd-modal max-h-full w-full max-w-lg space-y-4 overflow-y-auto whitespace-normal rounded-xl bg-modal p-5 text-fg select-text">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold">{card ? 'Editar card' : 'Novo card'}</h2>
           <button type="button" onClick={onCancel} aria-label="Fechar" className="cursor-pointer opacity-70 hover:opacity-100">

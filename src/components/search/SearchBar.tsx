@@ -190,7 +190,7 @@ export default function SearchBar({ cards, settings, history, onSearched, onRemo
   const showList = open && items.length > 0
 
   return (
-    <div ref={wrapRef} className="relative z-30 mt-auto mb-10 w-full shrink-0 sm:max-w-[50dvw] lg:mb-15 xl:max-w-3xl" onBlur={(e) => !wrapRef.current?.contains(e.relatedTarget as Node) && (setOpen(false), setFocused(false))}>
+    <div ref={wrapRef} className="sd-glow relative z-30 mt-auto mb-10 w-full shrink-0 sm:max-w-[50dvw] lg:mb-15 xl:max-w-3xl" onBlur={(e) => !wrapRef.current?.contains(e.relatedTarget as Node) && (setOpen(false), setFocused(false))}>
       <form
         onSubmit={(e) => e.preventDefault()}
         className="sd-search flex h-11 items-center gap-2 px-3 focus-within:border-secondary"

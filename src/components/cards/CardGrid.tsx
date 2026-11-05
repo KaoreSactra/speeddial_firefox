@@ -38,7 +38,7 @@ export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
 
   return (
     <>
-      <ul className={`my-auto grid w-full max-w-6xl grid-cols-2 gap-4 pb-16 transition-opacity duration-300 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-10 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
+      <ul className={`sd-glow my-auto grid w-full max-w-6xl grid-cols-2 gap-4 pb-16 transition-opacity duration-300 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-10 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
         {cards.map((card, i) => (
           <li key={card.id} className="sd-card group relative aspect-3/2">
             <a href={card.url} draggable={false} className="block h-full w-full rounded-[inherit]" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
