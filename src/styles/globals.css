@@ -1,9 +1,150 @@
 @import 'tailwindcss';
 @import './fonts.css';
 
-@theme {
-  --color-primary: #0f0f0f;
-  --color-secondary: #786c9f;
-  --shadow-custom: 0 0 15px rgb(120 108 159 / 0.5);
+/* Os componentes usam só estes tokens; cada tema abaixo define os valores. */
+@theme inline {
+  --color-primary: var(--bg);
+  --color-secondary: var(--accent);
+  --color-surface: var(--surface);
+  --color-field: var(--field);
+  --color-modal: var(--modal);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-on-accent: var(--on-accent);
   --font-display: 'Montserrat', 'sans-serif';
+}
+
+/* ---------- Intergaláctico (original) ---------- */
+:root,
+[data-theme='intergalactic'] {
+  color-scheme: dark;
+  --bg: #0f0f0f;
+  --page-bg: #0f0f0f;
+  --surface: #1d1d32;
+  --field: #1d1d32;
+  --modal: #14141f;
+  --fg: #ffffff;
+  --muted: #786c9f;
+  --accent: #786c9f;
+  --on-accent: #ffffff;
+
+  --card-bg: #786c9f;
+  --card-radius: 0.5rem;
+  --card-border: 0 solid transparent;
+  --card-shadow: 0 0 15px rgb(120 108 159 / 0.5);
+  --card-shadow-hover: 0 0 15px rgb(120 108 159 / 0.5);
+  --card-hover: scale(1.06);
+
+  --search-radius: 0.5rem;
+  --search-border: transparent;
+  --search-shadow: none;
+  --search-shadow-hover: 0 0 14px rgb(120 108 159 / 0.35);
+  --search-shadow-focus: 0 0 22px rgb(120 108 159 / 0.6);
+  --menu-radius: 0.5rem;
+  --menu-shadow: 0 8px 30px rgb(0 0 0 / 0.5);
+}
+
+/* ---------- Padrão escuro (Firefox) ---------- */
+[data-theme='default-dark'] {
+  color-scheme: dark;
+  --bg: #1c1b22;
+  --page-bg:
+    radial-gradient(ellipse 60% 45% at 0% 0%, rgb(96 70 170 / 0.38), transparent),
+    radial-gradient(ellipse 60% 45% at 100% 0%, rgb(160 70 55 / 0.32), transparent), #1c1b22;
+  --surface: #2b2a33;
+  --field: #2b2a33;
+  --modal: #23222b;
+  --fg: #fbfbfe;
+  --muted: #9e9ea8;
+  --accent: #7c6ae6;
+  --on-accent: #ffffff;
+
+  --card-bg: #2b2a33;
+  --card-radius: 1rem;
+  --card-border: 1px solid rgb(255 255 255 / 0.09);
+  --card-shadow: 0 1px 3px rgb(0 0 0 / 0.45), 0 6px 16px rgb(0 0 0 / 0.25);
+  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 12px 28px rgb(0 0 0 / 0.4);
+  --card-hover: translateY(-4px);
+
+  --search-radius: 9999px;
+  --search-border: rgb(255 255 255 / 0.14);
+  --search-shadow: none;
+  --search-shadow-hover: 0 0 0 1px rgb(255 255 255 / 0.18);
+  --search-shadow-focus: 0 0 0 2px rgb(124 106 230 / 0.55);
+  --menu-radius: 1.25rem;
+  --menu-shadow: 0 8px 30px rgb(0 0 0 / 0.55);
+}
+
+/* ---------- Padrão claro (Firefox) ---------- */
+[data-theme='default-light'] {
+  color-scheme: light;
+  --bg: #f9f9fb;
+  --page-bg:
+    radial-gradient(ellipse 60% 45% at 0% 0%, rgb(200 182 255 / 0.55), transparent),
+    radial-gradient(ellipse 60% 45% at 100% 0%, rgb(255 200 170 / 0.5), transparent), #f9f9fb;
+  --surface: #ffffff;
+  --field: #f0f0f4;
+  --modal: #ffffff;
+  --fg: #15141a;
+  --muted: #5b5b66;
+  --accent: #5b4fd1;
+  --on-accent: #ffffff;
+
+  --card-bg: #ffffff;
+  --card-radius: 1rem;
+  --card-border: 1px solid rgb(0 0 0 / 0.08);
+  --card-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 6px 16px rgb(0 0 0 / 0.06);
+  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.14), 0 12px 28px rgb(0 0 0 / 0.14);
+  --card-hover: translateY(-4px);
+
+  --search-radius: 9999px;
+  --search-border: rgb(0 0 0 / 0.16);
+  --search-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+  --search-shadow-hover: 0 0 0 1px rgb(0 0 0 / 0.2);
+  --search-shadow-focus: 0 0 0 2px rgb(91 79 209 / 0.5);
+  --menu-radius: 1.25rem;
+  --menu-shadow: 0 8px 30px rgb(0 0 0 / 0.16);
+}
+
+body {
+  background: var(--page-bg) fixed no-repeat;
+  color: var(--fg);
+  min-height: 100dvh;
+}
+
+/* Cards, barra de pesquisa e menu seguem as variáveis do tema. */
+.sd-card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+.sd-card:hover {
+  transform: var(--card-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.sd-search {
+  background: var(--surface);
+  border: 1px solid var(--search-border);
+  border-radius: var(--search-radius);
+  box-shadow: var(--search-shadow);
+  transition: box-shadow 300ms ease, border-color 300ms ease;
+}
+.sd-search:hover {
+  box-shadow: var(--search-shadow-hover);
+}
+.sd-search:focus-within {
+  box-shadow: var(--search-shadow-focus);
+}
+
+.sd-menu {
+  background: var(--surface);
+  border: 1px solid var(--search-border);
+  border-radius: var(--menu-radius);
+  box-shadow: var(--menu-shadow);
 }

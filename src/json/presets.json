@@ -1,5 +1,67 @@
 [
   {
+    "id": "anime",
+    "name": "Anime",
+    "images": [
+      {
+        "name": "Ali Express",
+        "src": "/img/containers/anime/AliExpress.png"
+      },
+      {
+        "name": "Amazon Shopping",
+        "src": "/img/containers/anime/AmazonShopping.png"
+      },
+      {
+        "name": "Chat GPT",
+        "src": "/img/containers/anime/ChatGPT.png"
+      },
+      {
+        "name": "Crunchyroll",
+        "src": "/img/containers/anime/Crunchyroll.png"
+      },
+      {
+        "name": "Deep Seek",
+        "src": "/img/containers/anime/DeepSeek.png"
+      },
+      {
+        "name": "Git Hub",
+        "src": "/img/containers/anime/GitHub.png"
+      },
+      {
+        "name": "Gmail",
+        "src": "/img/containers/anime/Gmail.png"
+      },
+      {
+        "name": "Instagram",
+        "src": "/img/containers/anime/Instagram.png"
+      },
+      {
+        "name": "Netflix",
+        "src": "/img/containers/anime/Netflix.png"
+      },
+      {
+        "name": "Nuuvem",
+        "src": "/img/containers/anime/Nuuvem.png"
+      },
+      {
+        "name": "Pinterest",
+        "src": "/img/containers/anime/Pinterest.png"
+      },
+      {
+        "name": "Prime Gaming",
+        "src": "/img/containers/anime/PrimeGaming.png"
+      },
+      {
+        "name": "Prime Video",
+        "src": "/img/containers/anime/PrimeVideo.png"
+      },
+      {
+        "name": "Youtube",
+        "src": "/img/containers/anime/Youtube.png"
+      }
+    ]
+  },
+  {
     "id": "gatos",
     "name": "Gatos",
     "images": [

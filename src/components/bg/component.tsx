@@ -3,7 +3,9 @@
 import { type ISourceOptions } from '@tsparticles/engine'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
+import { THEMES } from '@/lib/theme'
 import { useEffect, useMemo, useState } from 'react'
+import { useTheme } from '../theme/ThemeProvider'
 
 interface LiProps {
   className?: string
@@ -11,6 +13,8 @@ interface LiProps {
 
 export default function Bg({ className }: LiProps) {
   const [init, setInit] = useState(false)
+  const { theme, ready } = useTheme()
+  const showParticles = ready && !!THEMES.find((t) => t.id === theme)?.particles
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -45,5 +49,5 @@ export default function Bg({ className }: LiProps) {
     [],
   )
 
-  return <div className={`fixed top-0 left-0 -z-100 h-dvh w-dvw ${className ?? ''}`}>{init && <Particles id="tsparticles" options={options} className="h-full w-full" />}</div>
+  return <div className={`fixed top-0 left-0 -z-100 h-dvh w-dvw ${className ?? ''}`}>{init && showParticles && <Particles id="tsparticles" options={options} className="h-full w-full" />}</div>
 }

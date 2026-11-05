@@ -34,18 +34,18 @@ export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
     if (confirm('Restaurar os cards originais? Seus cards customizados serão perdidos.')) update(DEFAULT_CARDS)
   }
 
-  const actionBtn = 'flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/70 text-white hover:bg-black disabled:cursor-default disabled:opacity-30'
+  const actionBtn = 'flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-surface text-fg ring-1 ring-fg/15 hover:bg-field disabled:cursor-default disabled:opacity-30'
 
   return (
     <>
       <ul className={`my-auto grid w-full max-w-6xl grid-cols-2 gap-4 pb-16 transition-opacity duration-300 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-10 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
         {cards.map((card, i) => (
-          <li key={card.id} className="shadow-custom bg-secondary group relative aspect-3/2 rounded-lg transition duration-300 ease-in-out hover:scale-106">
-            <a href={card.url} draggable={false} className="block h-full w-full rounded-lg" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
+          <li key={card.id} className="sd-card group relative aspect-3/2">
+            <a href={card.url} draggable={false} className="block h-full w-full rounded-[inherit]" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
               <CardArt art={card.art} name={card.name} />
             </a>
             {editMode && (
-              <div className="absolute inset-0 flex flex-wrap content-center items-center justify-center gap-2 rounded-lg bg-black/50">
+              <div className="absolute inset-0 flex flex-wrap content-center items-center justify-center gap-2 rounded-[inherit] bg-black/50">
                 <button className={actionBtn} onClick={() => move(i, -1)} disabled={i === 0} aria-label="Mover para trás">
                   <ArrowLeft size={16} />
                 </button>
@@ -66,7 +66,7 @@ export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
           <li>
             <button
               onClick={() => setEditing('new')}
-              className="flex aspect-3/2 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-secondary text-secondary transition hover:scale-106"
+              className="flex aspect-3/2 w-full cursor-pointer items-center justify-center rounded-(--card-radius) border-2 border-dashed border-muted text-muted transition hover:scale-106"
               aria-label="Adicionar card"
             >
               <Plus size={40} />
@@ -82,7 +82,7 @@ export default function CardGrid({ cards, loaded, saveFailed, update }: Props) {
             <RotateCcw size={16} />
           </button>
         )}
-        <button onClick={() => setEditMode((v) => !v)} className={`${actionBtn} ${editMode ? 'bg-secondary!' : 'opacity-40 hover:opacity-100'}`} aria-label="Editar cards" title="Editar cards">
+        <button onClick={() => setEditMode((v) => !v)} className={`${actionBtn} ${editMode ? 'bg-secondary! text-on-accent!' : 'opacity-40 hover:opacity-100'}`} aria-label="Editar cards" title="Editar cards">
           <Pencil size={16} />
         </button>
       </div>

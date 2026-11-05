@@ -1,4 +1,6 @@
 import { Bg } from '@/components'
+import ThemeProvider from '@/components/theme/ThemeProvider'
+import { THEME_INIT_SCRIPT } from '@/lib/theme'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
 
@@ -13,10 +15,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className="font-display overflow-hidden bg-primary text-nowrap text-zinc-900 transition-all duration-300 select-none">
-        <Bg/>
-        {children}
+    <html lang="pt-BR" data-theme="intergalactic" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body className="font-display overflow-hidden text-nowrap select-none">
+        <ThemeProvider>
+          <Bg />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

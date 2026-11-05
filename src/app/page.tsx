@@ -14,7 +14,7 @@ export default function Home() {
       <SearchBar cards={cardState.cards} settings={settings} history={history} onSearched={addHistory} onRemoveHistory={removeHistory} paused={showSettings} />
       <CardGrid {...cardState} />
 
-      <button onClick={() => setShowSettings(true)} className="fixed bottom-4 left-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/70 text-white opacity-40 hover:opacity-100" aria-label="Configurações" title="Configurações">
+      <button onClick={() => setShowSettings(true)} className="fixed bottom-4 left-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-surface text-fg ring-1 ring-fg/15 opacity-50 hover:opacity-100" aria-label="Configurações" title="Configurações">
         <SlidersHorizontal size={16} />
       </button>
       {showSettings && <SettingsModal settings={settings} onSave={setSettings} onClearHistory={clearHistory} onClose={() => setShowSettings(false)} />}

@@ -1,7 +1,9 @@
 'use client'
+import { THEMES, type ThemeChoice } from '@/lib/theme'
 import { DEFAULT_SHORTCUTS, ENGINES, isValidTemplate, type SearchSettings, type Shortcut } from '@/lib/search'
 import { Plus, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
+import { useTheme } from '../theme/ThemeProvider'
 
 interface Props {
   settings: SearchSettings
@@ -10,12 +12,13 @@ interface Props {
   onClose: () => void
 }
 
-const inputCls = 'block w-full min-w-0 rounded-md bg-[#1d1d32] px-2 py-1.5 text-sm text-white placeholder:text-white/40 focus:outline-2 focus:outline-secondary'
+const inputCls = 'block w-full min-w-0 rounded-md bg-field px-2 py-1.5 text-sm text-fg placeholder:text-fg/40 focus:outline-2 focus:outline-secondary'
 
 export default function SettingsModal({ settings, onSave, onClearHistory, onClose }: Props) {
   const [engine, setEngine] = useState(settings.engine)
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(settings.shortcuts)
   const [error, setError] = useState('')
+  const { choice, setChoice } = useTheme()
 
   function edit(i: number, patch: Partial<Shortcut>) {
     setShortcuts((list) => list.map((s, idx) => (idx === i ? { ...s, ...patch } : s)))
@@ -35,7 +38,7 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onClose}>
-      <div onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-2xl space-y-5 overflow-y-auto rounded-xl bg-[#14141f] p-5 whitespace-normal text-white select-text">
+      <div onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-2xl space-y-5 overflow-y-auto rounded-xl bg-modal p-5 whitespace-normal text-fg select-text">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold">Configurações</h2>
           <button onClick={onClose} aria-label="Fechar" className="cursor-pointer opacity-70 hover:opacity-100">
@@ -44,10 +47,37 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
         </div>
 
         <section className="space-y-2">
+          <h3 className="font-semibold">Tema</h3>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {([{ id: 'auto', name: 'Automático' }, ...THEMES] as { id: ThemeChoice; name: string }[]).map((t) => {
+              const meta = THEMES.find((m) => m.id === t.id)
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setChoice(t.id)}
+                  aria-pressed={choice === t.id}
+                  className={`cursor-pointer overflow-hidden rounded-lg text-left text-sm ring-2 transition ${choice === t.id ? 'ring-secondary' : 'ring-transparent hover:ring-fg/30'}`}
+                >
+                  <span className="relative block h-14 w-full" style={{ background: meta ? meta.preview.page : 'linear-gradient(105deg,#0f0f0f 50%,#f9f9fb 50%)' }}>
+                    {meta && (
+                      <>
+                        <span className="absolute top-3 right-3 left-3 h-3 rounded-full" style={{ background: meta.preview.bar }} />
+                        <span className="absolute right-3 bottom-2 h-2 w-6 rounded-full" style={{ background: meta.preview.accent }} />
+                      </>
+                    )}
+                  </span>
+                  <span className="bg-field block px-2 py-1.5">{t.name}</span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="space-y-2">
           <h3 className="font-semibold">Buscador padrão</h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {ENGINES.map((e) => (
-              <button key={e.id} onClick={() => setEngine(e.id)} className={`cursor-pointer rounded-md px-3 py-2 text-sm ${engine === e.id ? 'bg-secondary' : 'bg-[#1d1d32] text-white/70 hover:text-white'}`}>
+              <button key={e.id} onClick={() => setEngine(e.id)} className={`cursor-pointer rounded-md px-3 py-2 text-sm ${engine === e.id ? 'bg-secondary text-on-accent' : 'bg-field text-fg/70 hover:text-fg'}`}>
                 {e.name}
               </button>
             ))}
@@ -56,7 +86,7 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
 
         <section className="space-y-2">
           <h3 className="font-semibold">Atalhos de busca</h3>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-fg/60">
             Digite o prefixo, um espaço e a busca (ex.: <code>yt gatos</code>). No link, <code>%s</code> é onde entra a busca.
           </p>
           {shortcuts.map((s, i) => (
@@ -70,27 +100,27 @@ export default function SettingsModal({ settings, onSave, onClearHistory, onClos
             </div>
           ))}
           <div className="flex gap-3 text-sm">
-            <button onClick={() => setShortcuts((l) => [...l, { prefix: '', name: '', url: '' }])} className="text-secondary flex cursor-pointer items-center gap-1">
+            <button onClick={() => setShortcuts((l) => [...l, { prefix: '', name: '', url: '' }])} className="text-muted flex cursor-pointer items-center gap-1">
               <Plus size={14} /> Adicionar
             </button>
-            <button onClick={() => setShortcuts(DEFAULT_SHORTCUTS)} className="cursor-pointer text-white/60 underline">
+            <button onClick={() => setShortcuts(DEFAULT_SHORTCUTS)} className="cursor-pointer text-fg/60 underline">
               Restaurar padrão
             </button>
           </div>
         </section>
 
         <section>
-          <button onClick={onClearHistory} className="cursor-pointer rounded-md bg-[#1d1d32] px-3 py-2 text-sm text-white/80 hover:text-white">
+          <button onClick={onClearHistory} className="cursor-pointer rounded-md bg-field px-3 py-2 text-sm text-fg/80 hover:text-fg">
             Limpar histórico de pesquisas
           </button>
         </section>
 
         {error && <p className="text-sm text-red-400">{error}</p>}
         <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="cursor-pointer rounded-md px-4 py-2 text-white/70 hover:text-white">
+          <button onClick={onClose} className="cursor-pointer rounded-md px-4 py-2 text-fg/70 hover:text-fg">
             Cancelar
           </button>
-          <button onClick={save} className="cursor-pointer rounded-md bg-secondary px-4 py-2 font-semibold">
+          <button onClick={save} className="cursor-pointer rounded-md bg-secondary px-4 py-2 font-semibold text-on-accent">
             Salvar
           </button>
         </div>

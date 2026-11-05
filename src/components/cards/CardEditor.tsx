@@ -6,7 +6,7 @@ import CardArt from './CardArt'
 
 type Mode = 'preset' | 'upload' | 'link' | 'color'
 
-const inputCls = 'block w-full min-w-0 rounded-md bg-[#1d1d32] px-3 py-2 text-white placeholder:text-white/40 focus:outline-2 focus:outline-secondary'
+const inputCls = 'block w-full min-w-0 rounded-md bg-field px-3 py-2 text-fg placeholder:text-fg/40 focus:outline-2 focus:outline-secondary'
 
 function initialMode(art?: CardArtData): Mode {
   if (!art) return 'preset'
@@ -58,7 +58,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onCancel}>
-      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-lg space-y-4 overflow-y-auto whitespace-normal rounded-xl bg-[#14141f] p-5 text-white select-text">
+      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-lg space-y-4 overflow-y-auto whitespace-normal rounded-xl bg-modal p-5 text-fg select-text">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold">{card ? 'Editar card' : 'Novo card'}</h2>
           <button type="button" onClick={onCancel} aria-label="Fechar" className="cursor-pointer opacity-70 hover:opacity-100">
@@ -75,7 +75,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
               key={m}
               type="button"
               onClick={() => setMode(m)}
-              className={`cursor-pointer rounded-md px-1 py-1 text-sm ${mode === m ? 'bg-secondary text-white' : 'bg-[#1d1d32] text-white/70'}`}
+              className={`cursor-pointer rounded-md px-1 py-1 text-sm ${mode === m ? 'bg-secondary text-on-accent' : 'bg-field text-fg/70'}`}
             >
               {label}
             </button>
@@ -93,21 +93,21 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
                     role="tab"
                     aria-selected={f.id === folder?.id}
                     onClick={() => setFolderId(f.id)}
-                    className={`cursor-pointer rounded-full px-3 py-0.5 text-xs ${f.id === folder?.id ? 'bg-white text-black' : 'bg-[#1d1d32] text-white/70 hover:text-white'}`}
+                    className={`cursor-pointer rounded-full px-3 py-0.5 text-xs ${f.id === folder?.id ? 'bg-fg text-modal' : 'bg-field text-fg/70 hover:text-fg'}`}
                   >
                     {f.name} <span className="opacity-60">{f.images.length}</span>
                   </button>
                 ))}
               </div>
             )}
-            {!folder && <p className="text-sm text-white/60">Nenhuma imagem em public/img/containers/.</p>}
+            {!folder && <p className="text-sm text-fg/60">Nenhuma imagem em public/img/containers/.</p>}
             <div className="grid max-h-64 grid-cols-3 gap-2 overflow-y-auto sm:grid-cols-4">
               {folder?.images.map((p) => (
                 <button
                   key={p.src}
                   type="button"
                   onClick={() => setSrc(p.src)}
-                  className={`cursor-pointer overflow-hidden rounded-md ${src === p.src ? 'outline-2 outline-white' : 'opacity-70 hover:opacity-100'}`}
+                  className={`cursor-pointer overflow-hidden rounded-md ${src === p.src ? 'outline-2 outline-fg' : 'opacity-70 hover:opacity-100'}`}
                   title={p.name}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -117,7 +117,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
             </div>
           </div>
         )}
-        {mode === 'upload' && <input type="file" accept="image/*" onChange={(e) => handleFile(e.target.files?.[0])} className="block w-full text-sm file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-white" />}
+        {mode === 'upload' && <input type="file" accept="image/*" onChange={(e) => handleFile(e.target.files?.[0])} className="block w-full text-sm file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-fg" />}
         {mode === 'link' && <input className={inputCls} placeholder="https://exemplo.com/imagem.png" value={src.startsWith('/') || src.startsWith('data:') ? '' : src} onChange={(e) => setSrc(e.target.value)} inputMode="url" />}
         {mode === 'color' && (
           <div className="flex flex-wrap items-center gap-3 text-sm">
@@ -140,10 +140,10 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
         {error && <p className="text-sm text-red-400">{error}</p>}
 
         <div className="flex justify-end gap-2">
-          <button type="button" onClick={onCancel} className="cursor-pointer rounded-md px-4 py-2 text-white/70 hover:text-white">
+          <button type="button" onClick={onCancel} className="cursor-pointer rounded-md px-4 py-2 text-fg/70 hover:text-fg">
             Cancelar
           </button>
-          <button type="submit" className="cursor-pointer rounded-md bg-secondary px-4 py-2 font-semibold text-white">
+          <button type="submit" className="cursor-pointer rounded-md bg-secondary px-4 py-2 font-semibold text-on-accent">
             Salvar
           </button>
         </div>

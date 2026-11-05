@@ -193,9 +193,9 @@ export default function SearchBar({ cards, settings, history, onSearched, onRemo
     <div ref={wrapRef} className="relative z-30 mt-auto mb-10 w-full shrink-0 sm:max-w-[50dvw] lg:mb-15 xl:max-w-3xl" onBlur={(e) => !wrapRef.current?.contains(e.relatedTarget as Node) && (setOpen(false), setFocused(false))}>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="flex h-11 items-center gap-2 rounded-lg bg-[#1d1d32] px-3 ring-1 ring-transparent transition-shadow duration-300 hover:shadow-[0_0_14px_rgb(120_108_159/0.35)] focus-within:shadow-[0_0_22px_rgb(120_108_159/0.6)] focus-within:ring-secondary"
+        className="sd-search flex h-11 items-center gap-2 px-3 focus-within:border-secondary"
       >
-        <Icon className="text-secondary shrink-0" size={20} aria-hidden />
+        <Icon className="text-muted shrink-0" size={20} aria-hidden />
         <input
           ref={inputRef}
           type="text"
@@ -205,7 +205,7 @@ export default function SearchBar({ cards, settings, history, onSearched, onRemo
           aria-autocomplete="list"
           autoComplete="off"
           spellCheck={false}
-          className="placeholder:text-secondary/60 w-full min-w-0 bg-transparent text-white focus:outline-none"
+          className="placeholder:text-muted w-full min-w-0 bg-transparent text-fg focus:outline-none"
           value={query}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => {
@@ -215,19 +215,19 @@ export default function SearchBar({ cards, settings, history, onSearched, onRemo
           onKeyDown={onKeyDown}
           placeholder={`Pesquisar no ${engine.name} ou digitar endereço...`}
         />
-        {copied && <span className="text-secondary shrink-0 text-xs">Copiado!</span>}
+        {copied && <span className="text-muted shrink-0 text-xs">Copiado!</span>}
         {query ? (
-          <button type="button" className="text-secondary cursor-pointer" aria-label="Limpar" onClick={() => (onChange(''), inputRef.current?.focus())}>
+          <button type="button" className="text-muted cursor-pointer" aria-label="Limpar" onClick={() => (onChange(''), inputRef.current?.focus())}>
             <X size={18} />
           </button>
         ) : (
-          !focused && <kbd className="border-secondary/40 text-secondary hidden shrink-0 rounded border px-1.5 text-xs sm:block">/</kbd>
+          !focused && <kbd className="border-muted/40 text-muted hidden shrink-0 rounded border px-1.5 text-xs sm:block">/</kbd>
         )}
       </form>
 
       {showList && (
-        <ul id="search-list" role="listbox" className="absolute top-full right-0 left-0 mt-2 max-h-[60dvh] overflow-y-auto rounded-lg bg-[#1d1d32] py-1 shadow-[0_8px_30px_rgb(0_0_0/0.5)]">
-          {!q && <li className="text-secondary/70 px-3 py-1 text-xs">Pesquisas recentes</li>}
+        <ul id="search-list" role="listbox" className="absolute top-full right-0 left-0 mt-2 max-h-[60dvh] overflow-y-auto py-1.5 sd-menu">
+          {!q && <li className="text-muted px-3 py-1 text-xs">Pesquisas recentes</li>}
           {items.map((item, i) => (
             <li
               key={item.key}
@@ -236,9 +236,9 @@ export default function SearchBar({ cards, settings, history, onSearched, onRemo
               onMouseDown={(e) => e.preventDefault()}
               onMouseMove={() => setActive(i)}
               onClick={(e) => item.run(e.ctrlKey || e.metaKey)}
-              className={`flex cursor-pointer items-center gap-3 px-3 py-2 text-white ${i === activeIndex ? 'bg-secondary/30' : ''}`}
+              className={`flex cursor-pointer items-center gap-3 px-3 py-2 text-fg ${i === activeIndex ? 'bg-secondary/30' : ''}`}
             >
-              <span className="text-secondary flex w-8 shrink-0 justify-center">
+              <span className="text-muted flex w-8 shrink-0 justify-center">
                 {item.card ? (
                   <span className="block aspect-3/2 w-8 overflow-hidden rounded-sm">
                     <CardArt art={item.card.art} name={item.card.name} />
@@ -258,12 +258,12 @@ export default function SearchBar({ cards, settings, history, onSearched, onRemo
                 )}
               </span>
               <span className="min-w-0 flex-1 truncate">{item.label}</span>
-              {item.hint && <span className="text-secondary hidden shrink-0 text-xs sm:block">{item.hint}</span>}
+              {item.hint && <span className="text-muted hidden shrink-0 text-xs sm:block">{item.hint}</span>}
               {item.removable && (
                 <button
                   type="button"
                   aria-label="Remover do histórico"
-                  className="text-secondary shrink-0 cursor-pointer opacity-60 hover:opacity-100"
+                  className="text-muted shrink-0 cursor-pointer opacity-60 hover:opacity-100"
                   onClick={(e) => {
                     e.stopPropagation()
                     onRemoveHistory(item.removable!)
