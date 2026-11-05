@@ -6,7 +6,7 @@ import CardArt from './CardArt'
 
 type Mode = 'preset' | 'upload' | 'link' | 'color'
 
-const inputCls = 'w-full rounded-md bg-[#1d1d32] px-3 py-2 text-white placeholder:text-white/40 focus:outline-2 focus:outline-secondary'
+const inputCls = 'block w-full min-w-0 rounded-md bg-[#1d1d32] px-3 py-2 text-white placeholder:text-white/40 focus:outline-2 focus:outline-secondary'
 
 function initialMode(art?: CardArtData): Mode {
   if (!art) return 'preset'
@@ -55,7 +55,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onCancel}>
-      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-lg space-y-4 overflow-y-auto rounded-xl bg-[#14141f] p-5 text-white select-text">
+      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="max-h-full w-full max-w-lg space-y-4 overflow-y-auto whitespace-normal rounded-xl bg-[#14141f] p-5 text-white select-text">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold">{card ? 'Editar card' : 'Novo card'}</h2>
           <button type="button" onClick={onCancel} aria-label="Fechar" className="cursor-pointer opacity-70 hover:opacity-100">
@@ -66,13 +66,13 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
         <input className={inputCls} placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} autoFocus maxLength={40} />
         <input className={inputCls} placeholder="Link (ex.: youtube.com)" value={url} onChange={(e) => setUrl(e.target.value)} inputMode="url" />
 
-        <div className="flex gap-2">
+        <div className="grid grid-cols-4 gap-2">
           {modes.map(([m, label]) => (
             <button
               key={m}
               type="button"
               onClick={() => setMode(m)}
-              className={`flex-1 cursor-pointer rounded-md px-2 py-1 text-sm ${mode === m ? 'bg-secondary text-white' : 'bg-[#1d1d32] text-white/70'}`}
+              className={`cursor-pointer rounded-md px-1 py-1 text-sm ${mode === m ? 'bg-secondary text-white' : 'bg-[#1d1d32] text-white/70'}`}
             >
               {label}
             </button>
@@ -80,7 +80,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
         </div>
 
         {mode === 'preset' && (
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {PRESET_IMAGES.map((p) => (
               <button
                 key={p.src}
@@ -95,10 +95,10 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
             ))}
           </div>
         )}
-        {mode === 'upload' && <input type="file" accept="image/*" onChange={(e) => handleFile(e.target.files?.[0])} className="w-full text-sm file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-white" />}
+        {mode === 'upload' && <input type="file" accept="image/*" onChange={(e) => handleFile(e.target.files?.[0])} className="block w-full text-sm file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-white" />}
         {mode === 'link' && <input className={inputCls} placeholder="https://exemplo.com/imagem.png" value={src.startsWith('/') || src.startsWith('data:') ? '' : src} onChange={(e) => setSrc(e.target.value)} inputMode="url" />}
         {mode === 'color' && (
-          <div className="flex items-center gap-3 text-sm">
+          <div className="flex flex-wrap items-center gap-3 text-sm">
             <label className="flex items-center gap-2">
               Cor <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="h-8 w-12 cursor-pointer" />
             </label>
@@ -111,7 +111,7 @@ export default function CardEditor({ card, onSave, onCancel }: { card?: CardData
           </div>
         )}
 
-        <div className="mx-auto aspect-3/2 w-44 rounded-lg bg-secondary">
+        <div className="mx-auto aspect-3/2 w-36 rounded-lg bg-secondary">
           <CardArt art={art} name={name || 'Prévia'} />
         </div>
 

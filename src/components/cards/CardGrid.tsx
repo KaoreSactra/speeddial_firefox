@@ -46,9 +46,9 @@ export default function CardGrid() {
 
   return (
     <>
-      <ul className={`grid grid-cols-2 gap-6 transition-opacity duration-300 sm:grid-cols-3 lg:grid-cols-4 lg:gap-10 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
+      <ul className={`my-auto grid w-full max-w-6xl grid-cols-2 gap-4 pb-16 transition-opacity duration-300 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-10 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
         {cards.map((card, i) => (
-          <li key={card.id} className="shadow-custom bg-secondary group relative aspect-3/2 min-h-25 min-w-37.5 rounded-lg transition duration-300 ease-in-out hover:scale-106">
+          <li key={card.id} className="shadow-custom bg-secondary group relative aspect-3/2 rounded-lg transition duration-300 ease-in-out hover:scale-106">
             <a href={card.url} draggable={false} className="block h-full w-full rounded-lg" rel="noopener noreferrer" aria-label={card.name} onClick={(e) => editMode && e.preventDefault()}>
               <CardArt art={card.art} name={card.name} />
             </a>
@@ -74,7 +74,7 @@ export default function CardGrid() {
           <li>
             <button
               onClick={() => setEditing('new')}
-              className="flex aspect-3/2 min-h-25 min-w-37.5 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-secondary text-secondary transition hover:scale-106"
+              className="flex aspect-3/2 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-secondary text-secondary transition hover:scale-106"
               aria-label="Adicionar card"
             >
               <Plus size={40} />

@@ -30,10 +30,10 @@ export default function Home() {
   }
 
   return (
-    <main className="flex h-dvh w-dvw flex-col items-center justify-center overflow-y-auto px-[8dvw] py-6 lg:px-[14dvw]">
+    <main className="flex h-dvh w-dvw flex-col items-center overflow-y-auto px-4 py-6 sm:px-[8dvw] lg:px-[14dvw]">
       <form
         onSubmit={handleSearch}
-        className="mb-15 flex h-10 w-full max-w-[50dvw] min-w-60 shrink-0 items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
+        className="mt-auto mb-10 flex h-10 w-full shrink-0 lg:mb-15 sm:max-w-[50dvw] xl:max-w-3xl items-center justify-between space-x-2 rounded-lg bg-[#1d1d32] p-2 transition duration-300 ease-in-out focus-within:scale-106 hover:scale-106"
       >
         <input ref={inputRef} type="text" className="text-secondary w-full opacity-100 focus:outline-none" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar..." />
         <button className="text-secondary cursor-pointer opacity-100" type="submit" aria-label="Pesquisar">
