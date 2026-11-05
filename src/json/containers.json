@@ -3,72 +3,84 @@
         "id": 1,
         "name": "Amazon Shopping",
         "url": "https://www.amazon.com.br",
-        "img": "/img/containers/gatos/AmazonShopping.png"
+        "color": "#fb923c",
+        "color2": "#ea580c"
     },
     {
         "id": 2,
         "name": "ChatGPT",
         "url": "https://chatgpt.com",
-        "img": "/img/containers/gatos/ChatGPT.png"
+        "color": "#14b8a6",
+        "color2": "#0f766e"
     },
     {
         "id": 3,
         "name": "Crunchyroll",
         "url": "https://www.crunchyroll.com/pt-br",
-        "img": "/img/containers/gatos/Crunchyroll.png"
+        "color": "#f59e0b",
+        "color2": "#d97706"
     },
     {
         "id": 4,
         "name": "GitHub",
         "url": "https://github.com/KaoreSactra",
-        "img": "/img/containers/gatos/GitHub.png"
+        "color": "#64748b",
+        "color2": "#1e293b"
     },
     {
         "id": 5,
         "name": "Gmail",
         "url": "https://mail.google.com/mail/u/0/#inbox",
-        "img": "/img/containers/gatos/Gmail.png"
+        "color": "#fb7185",
+        "color2": "#e11d48"
     },
     {
         "id": 6,
         "name": "Google",
         "url": "https://www.google.com",
-        "img": "/img/containers/gatos/Google.png"
+        "color": "#3b82f6",
+        "color2": "#4f46e5"
     },
     {
         "id": 7,
         "name": "Instagram",
         "url": "https://www.instagram.com/",
-        "img": "/img/containers/gatos/Instagram.png"
+        "color": "#d946ef",
+        "color2": "#9333ea"
     },
     {
         "id": 8,
         "name": "Mercado Livre",
         "url": "https://www.mercadolivre.com.br/",
-        "img": "/img/containers/gatos/MercadoLivre.png"
+        "color": "#eab308",
+        "color2": "#b45309"
     },
     {
         "id": 9,
         "name": "Netflix",
         "url": "https://www.netflix.com/browse",
-        "img": "/img/containers/gatos/Netflix.png"
+        "color": "#dc2626",
+        "color2": "#7f1d1d"
     },
     {
         "id": 10,
         "name": "Pinterest",
         "url": "https://br.pinterest.com/",
-        "img": "/img/containers/gatos/Pinterest.png"
+        "color": "#ec4899",
+        "color2": "#be185d"
     },
     {
         "id": 11,
         "name": "Prime Video",
         "url": "https://www.primevideo.com",
-        "img": "/img/containers/gatos/PrimeVideo.png"
+        "color": "#0ea5e9",
+        "color2": "#1d4ed8"
     },
     {
         "id": 12,
         "name": "YouTube",
         "url": "https://www.youtube.com/",
-        "img": "/img/containers/gatos/Youtube.png"
+        "color": "#ef4444",
+        "color2": "#b91c1c"
     }
 ]

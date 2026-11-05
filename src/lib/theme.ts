@@ -18,7 +18,7 @@ export const THEMES: ThemeMeta[] = [
 ]
 
 export const THEME_KEY = 'speeddial:theme:v1'
-export const DEFAULT_THEME: ThemeChoice = 'intergalactic'
+export const DEFAULT_THEME: ThemeChoice = 'auto'
 
 export function isThemeChoice(v: unknown): v is ThemeChoice {
   return v === 'auto' || THEMES.some((t) => t.id === v)
@@ -29,4 +29,4 @@ export function resolveTheme(choice: ThemeChoice, systemLight: boolean): ThemeId
 }
 
 /** Roda antes da hidratação para o tema certo aparecer sem "piscar". */
-export const THEME_INIT_SCRIPT = `try{var ids=${JSON.stringify(THEMES.map((t) => t.id))};var c=localStorage.getItem(${JSON.stringify(THEME_KEY)})||${JSON.stringify(DEFAULT_THEME)};var t=c==='auto'?(matchMedia('(prefers-color-scheme: light)').matches?'default-light':'default-dark'):(ids.indexOf(c)>-1?c:${JSON.stringify(DEFAULT_THEME)});document.documentElement.dataset.theme=t}catch(e){}`
+export const THEME_INIT_SCRIPT = `try{var ids=${JSON.stringify(THEMES.map((t) => t.id))};var c=localStorage.getItem(${JSON.stringify(THEME_KEY)})||${JSON.stringify(DEFAULT_THEME)};if(ids.indexOf(c)<0)c='auto';document.documentElement.dataset.theme=c==='auto'?(matchMedia('(prefers-color-scheme: light)').matches?'default-light':'default-dark'):c}catch(e){}`

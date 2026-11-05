@@ -9,7 +9,7 @@ interface ThemeCtx {
   setChoice: (c: ThemeChoice) => void
 }
 
-const Ctx = createContext<ThemeCtx>({ choice: DEFAULT_THEME, theme: 'intergalactic', ready: false, setChoice: () => {} })
+const Ctx = createContext<ThemeCtx>({ choice: DEFAULT_THEME, theme: 'default-dark', ready: false, setChoice: () => {} })
 export const useTheme = () => useContext(Ctx)
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {

@@ -32,7 +32,7 @@ export const DEFAULT_CARDS: CardData[] = defaults.map((c) => ({
   id: `default-${c.id}`,
   name: c.name,
   url: c.url,
-  art: { type: 'image', src: c.img },
+  art: { type: 'solid', color: c.color, color2: c.color2 },
 }))
 
 /** Aceita "youtube.com", "http://x.com"… e devolve uma URL http(s) válida ou null. */
